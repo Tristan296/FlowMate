@@ -1,0 +1,261 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  ownedWorkspaces Workspace[]
+  auditLogs       AuditLog[]
+
+  @@map("users")
+}
+
+model Workspace {
+  id      String @id @default(cuid())
+  name    String
+  slug    String @unique
+  ownerId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  owner        User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  workflows    Workflow[]
+  connections  Connection[]
+  subscription Subscription?
+  usage        Usage[]
+  auditLogs    AuditLog[]
+
+  @@map("workspaces")
+}
+
+model Subscription {
+  id          String @id @default(cuid())
+  workspaceId String @unique
+  plan        String // free, pro, enterprise
+  status      String // active, cancelled, past_due
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+model Connection {
+  id          String @id @default(cuid())
+  workspaceId String
+  type        String // sendgrid, twilio, sheets
+  name        String
+  config      Json   // encrypted connection details
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("connections")
+}
+
+model Workflow {
+  id          String        @id @default(cuid())
+  workspaceId String
+  templateId  String?
+  name        String
+  description String?
+  status      WorkflowStatus @default(DRAFT)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  template  Template? @relation(fields: [templateId], references: [id])
+  trigger   Trigger?
+  steps     Step[]
+  runs      Run[]
+  auditLogs AuditLog[]
+
+  @@map("workflows")
+}
+
+model Trigger {
+  id         String      @id @default(cuid())
+  workflowId String      @unique
+  type       TriggerType
+  config     Json
+  enabled    Boolean     @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workflow Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@map("triggers")
+}
+
+model Step {
+  id         String     @id @default(cuid())
+  workflowId String
+  type       ActionType
+  config     Json
+  position   Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workflow Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  stepRuns StepRun[]
+
+  @@map("steps")
+}
+
+model Run {
+  id          String    @id @default(cuid())
+  workflowId  String
+  status      RunStatus @default(PENDING)
+  triggeredBy String
+  triggeredAt DateTime
+  startedAt   DateTime?
+  completedAt DateTime?
+  error       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workflow  Workflow  @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  stepRuns  StepRun[]
+  auditLogs AuditLog[]
+
+  @@map("runs")
+}
+
+model StepRun {
+  id          String        @id @default(cuid())
+  runId       String
+  stepId      String
+  status      StepRunStatus @default(PENDING)
+  input       Json?
+  output      Json?
+  error       String?
+  retryCount  Int           @default(0)
+  startedAt   DateTime?
+  completedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  run  Run  @relation(fields: [runId], references: [id], onDelete: Cascade)
+  step Step @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@map("step_runs")
+}
+
+model Usage {
+  id          String   @id @default(cuid())
+  workspaceId String
+  type        String   // workflow_runs, emails_sent, sms_sent
+  count       Int
+  date        DateTime @db.Date
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, type, date])
+  @@map("usage")
+}
+
+model Template {
+  id               String @id @default(cuid())
+  name             String
+  description      String
+  category         String
+  tags             String[]
+  workflowTemplate Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  workflows Workflow[]
+
+  @@map("templates")
+}
+
+model AuditLog {
+  id          String  @id @default(cuid())
+  workspaceId String
+  userId      String?
+  runId       String?
+  workflowId  String?
+  action      String
+  details     Json?
+
+  createdAt DateTime @default(now())
+
+  // Relations
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id])
+  run       Run?      @relation(fields: [runId], references: [id])
+  workflow  Workflow? @relation(fields: [workflowId], references: [id])
+
+  @@map("audit_logs")
+}
+
+enum WorkflowStatus {
+  DRAFT
+  PUBLISHED
+  PAUSED
+}
+
+enum TriggerType {
+  CRON
+  WEBHOOK
+}
+
+enum ActionType {
+  EMAIL_SEND
+  SMS_SEND
+  SHEET_APPEND
+}
+
+enum RunStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum StepRunStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  SKIPPED
+}

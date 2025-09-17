@@ -1,0 +1,30 @@
+{
+  "name": "flowmate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FlowMate - Workflow automation platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "concurrently \"pnpm -C apps/api dev\" \"pnpm -C apps/web dev\" \"pnpm -C apps/api worker\"",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "db:migrate": "pnpm -C apps/api db:migrate",
+    "db:reset": "pnpm -C apps/api db:reset",
+    "seed": "pnpm -C packages/templates seed"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "concurrently": "^8.2.2",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.10.0"
+}

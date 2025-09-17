@@ -1,0 +1,30 @@
+{
+  "name": "@flowmate/templates",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "seed": "./dist/seed.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "seed": "node ./dist/seed.js"
+  },
+  "dependencies": {
+    "@flowmate/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/jest": "^29.5.6",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "eslint": "^8.52.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  }
+}
