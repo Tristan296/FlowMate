@@ -1,0 +1,33 @@
+{
+  "name": "@flowmate/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev -p 3000",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "start": "next start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@flowmate/shared": "workspace:*",
+    "next": "14.0.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "@tailwindcss/forms": "^0.5.6",
+    "lucide-react": "^0.289.0",
+    "clsx": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.0",
+    "postcss": "^8",
+    "tailwindcss": "^3",
+    "typescript": "^5"
+  }
+}
