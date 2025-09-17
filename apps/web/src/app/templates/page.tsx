@@ -20,7 +20,7 @@ const templates = [
   {
     id: 'tradie-quote-followup',
     name: 'Quote Follow-up',
-    description: 'Follow up with customers who haven\'t responded to quotes within 3 days',
+    description: 'Follow up with customers who haven&apos;t responded to quotes within 3 days',
     category: 'Tradies',
     tags: ['quotes', 'followup', 'email'],
   },

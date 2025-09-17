@@ -13,7 +13,8 @@ export class TemplateRenderer {
 
   private static replaceVariables(obj: any, variables: Record<string, any>): void {
     if (typeof obj === 'string') {
-      return this.interpolateString(obj, variables);
+      // Note: This method mutates the object in place for objects and arrays
+      return;
     }
     
     if (Array.isArray(obj)) {

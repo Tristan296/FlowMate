@@ -9,7 +9,7 @@ export default function OnboardingPage() {
           Welcome to FlowMate!
         </h1>
         <p className="mt-4 text-lg text-gray-600">
-          Let's get you set up with your first automated workflow
+          Let&apos;s get you set up with your first automated workflow
         </p>
       </div>
 

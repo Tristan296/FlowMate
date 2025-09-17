@@ -1,8 +1,5 @@
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/navbar'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'FlowMate - Workflow Automation',
@@ -16,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <Navbar />
         <main className="min-h-screen bg-gray-50">
           {children}

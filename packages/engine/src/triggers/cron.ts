@@ -39,7 +39,7 @@ export class CronTriggerHandler implements TriggerHandler {
   async teardown(workflowId: string): Promise<void> {
     const task = this.tasks.get(workflowId);
     if (task) {
-      task.destroy();
+      task.stop();
       this.tasks.delete(workflowId);
       console.log(`Cron trigger torn down for workflow ${workflowId}`);
     }

@@ -45,7 +45,12 @@ export class WorkflowEngine {
         return failure(new Error(`No handler registered for trigger type: ${workflow.trigger.type}`));
       }
 
-      await triggerHandler.setup(workflow, this.executeWorkflow.bind(this));
+      await triggerHandler.setup(workflow, async (workflowId: string, context?: any) => {
+        const result = await this.executeWorkflow(workflowId, context);
+        if (!result.success) {
+          console.error(`Workflow execution failed: ${result.error.message}`);
+        }
+      });
       this.runningWorkflows.set(workflow.id, { workflow, triggerHandler });
       
       return success(undefined);

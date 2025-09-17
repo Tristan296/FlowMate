@@ -82,7 +82,7 @@ export class QueueService {
         if (result.success) {
           this.logger.log(`Setup workflow ${workflow.name} (${workflow.id})`);
         } else {
-          this.logger.error(`Failed to setup workflow ${workflow.name}: ${result.error.message}`);
+          this.logger.error(`Failed to setup workflow ${workflow.name}: ${(result as any).error?.message || 'Unknown error'}`);
         }
       }
     }
