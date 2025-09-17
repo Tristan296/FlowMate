@@ -4,7 +4,6 @@ import React from 'react';
 import { 
   CheckCircle, 
   Users, 
-  BarChart3, 
   Zap, 
   Menu, 
   X,
@@ -12,7 +11,12 @@ import {
   Star,
   Calendar,
   FileText,
-  Workflow
+  Workflow,
+  Mail,
+  MessageSquare,
+  DollarSign,
+  Clock,
+  Target
 } from 'lucide-react';
 
 export default function Home() {
@@ -20,80 +24,80 @@ export default function Home() {
 
   const features = [
     {
-      icon: <Workflow className="h-8 w-8 text-blue-600" />,
-      title: "Workflow Automation",
-      description: "Automate repetitive tasks and streamline your processes with intelligent workflow management."
+      icon: <Mail className="h-8 w-8 text-blue-600" />,
+      title: "Client Follow-Up Automation",
+      description: "Never lose a lead again. Automatically follow up with quotes, proposals, and check-ins. Perfect for tradies and service businesses."
     },
     {
-      icon: <Users className="h-8 w-8 text-green-600" />,
-      title: "Team Collaboration",
-      description: "Work seamlessly with your team through real-time collaboration and communication tools."
+      icon: <DollarSign className="h-8 w-8 text-green-600" />,
+      title: "Invoice Reminders",
+      description: "Stop chasing payments manually. Auto-send polite reminders at 7, 14, and 30 days overdue. Integrates with Xero and QuickBooks."
     },
     {
-      icon: <BarChart3 className="h-8 w-8 text-purple-600" />,
-      title: "Analytics & Insights",
-      description: "Get detailed insights into your productivity and team performance with comprehensive analytics."
+      icon: <MessageSquare className="h-8 w-8 text-purple-600" />,
+      title: "SMS & Email Templates",
+      description: "Pre-built templates for appointment confirmations, service reminders, and thank you messages. Just set up once and let it run."
     },
     {
       icon: <Calendar className="h-8 w-8 text-orange-600" />,
-      title: "Smart Scheduling",
-      description: "Intelligent scheduling that adapts to your workflow and maximizes productivity."
+      title: "Appointment Automation",
+      description: "Send booking confirmations, SMS reminders, and follow-up surveys automatically. Perfect for salons, gyms, and consultants."
     },
     {
-      icon: <FileText className="h-8 w-8 text-red-600" />,
-      title: "Document Management",
-      description: "Organize, share, and collaborate on documents with version control and real-time editing."
+      icon: <Target className="h-8 w-8 text-red-600" />,
+      title: "Review & Upsell Automation",
+      description: "Ask for reviews 24 hours after service completion. Follow up with upsell offers after 30 days. Boost your reputation and revenue."
     },
     {
-      icon: <Zap className="h-8 w-8 text-yellow-600" />,
-      title: "Lightning Fast",
-      description: "Built for speed with modern technology stack ensuring instant responses and smooth performance."
+      icon: <Clock className="h-8 w-8 text-yellow-600" />,
+      title: "Set & Forget Setup",
+      description: "No complex setup like Zapier. Choose your industry template, connect your tools, and watch it work. Built for non-tech business owners."
     }
   ];
 
   const pricingPlans = [
     {
       name: "Starter",
-      price: "$9",
+      price: "$29",
       period: "/month",
-      description: "Perfect for individuals and small teams",
+      description: "Perfect for solo business owners",
       features: [
-        "Up to 5 users",
-        "Basic workflow automation",
-        "10GB storage",
+        "Up to 100 automated emails/month",
+        "Basic follow-up sequences",
+        "SMS reminders (50/month)",
         "Email support",
-        "Mobile app access"
+        "Industry templates"
       ],
       highlighted: false
     },
     {
       name: "Professional",
-      price: "$29",
+      price: "$59",
       period: "/month",
-      description: "For growing teams and businesses",
+      description: "For growing service businesses",
       features: [
-        "Up to 25 users",
-        "Advanced automation",
-        "100GB storage",
-        "Priority support",
-        "Advanced analytics",
-        "Custom integrations"
+        "Up to 500 automated emails/month",
+        "Advanced automation sequences",
+        "Unlimited SMS reminders",
+        "Review automation",
+        "Xero/QuickBooks integration",
+        "Priority support"
       ],
       highlighted: true
     },
     {
-      name: "Enterprise",
+      name: "Business",
       price: "$99",
       period: "/month",
-      description: "For large organizations",
+      description: "For established SMBs",
       features: [
-        "Unlimited users",
-        "Enterprise automation",
-        "1TB storage",
-        "24/7 dedicated support",
-        "Custom workflows",
-        "SSO & advanced security",
-        "API access"
+        "Unlimited automated emails",
+        "Custom workflow builder",
+        "Multi-location support",
+        "Team collaboration",
+        "Advanced analytics",
+        "White-label options",
+        "Dedicated support"
       ],
       highlighted: false
     }
@@ -154,12 +158,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Streamline Your
-              <span className="text-blue-600 block">Workflow</span>
+              Stop Chasing Clients.
+              <span className="text-blue-600 block">Stop Drowning in Admin.</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              FlowMate is the ultimate productivity platform that helps teams and individuals 
-              automate workflows, collaborate seamlessly, and boost productivity like never before.
+              FlowMate is the admin assistant for small business owners who don&apos;t have one. 
+              Automate follow-ups, invoice reminders, client onboarding, and more. Set it and forget it.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a href="/auth/signup" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-blue-700 transition-colors flex items-center">
@@ -176,7 +180,7 @@ export default function Home() {
               <Star className="h-4 w-4 text-yellow-400 mr-1" />
               <Star className="h-4 w-4 text-yellow-400 mr-1" />
               <Star className="h-4 w-4 text-yellow-400 mr-2" />
-              Trusted by 50,000+ teams worldwide
+              Trusted by 2,000+ small business owners
             </div>
           </div>
         </div>
@@ -187,10 +191,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Everything you need to succeed
+              Your Virtual Admin Assistant
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Powerful features designed to help you work smarter, not harder.
+              Automate the admin tasks that eat up 5-15 hours of your week. Focus on growing your business instead.
             </p>
           </div>
           
@@ -206,15 +210,75 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Pricing Section */}
-      <div id="pricing" className="py-20 bg-gray-50">
+      {/* Target Industries Section */}
+      <div className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Simple, transparent pricing
+              Built for Your Industry
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Choose the perfect plan for your team. All plans include a 14-day free trial.
+              Pre-configured workflows for the businesses that need them most.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <Users className="h-6 w-6 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Service Businesses</h3>
+              <p className="text-gray-600 text-sm mb-4">Salons, gyms, spas, personal trainers</p>
+              <div className="text-sm text-gray-500">
+                <strong>Example:</strong> New client gets welcome email → booking confirmation → SMS reminder → follow-up review request
+              </div>
+            </div>
+            
+            <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <Zap className="h-6 w-6 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Tradies & Contractors</h3>
+              <p className="text-gray-600 text-sm mb-4">Plumbers, electricians, builders</p>
+              <div className="text-sm text-gray-500">
+                <strong>Example:</strong> Quote sent → 2 days no response → auto follow-up → payment reminder after job completion
+              </div>
+            </div>
+            
+            <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                <FileText className="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Professional Services</h3>
+              <p className="text-gray-600 text-sm mb-4">Consultants, agencies, accountants</p>
+              <div className="text-sm text-gray-500">
+                <strong>Example:</strong> Contract signed → auto-send onboarding pack → weekly progress updates → project completion survey
+              </div>
+            </div>
+            
+            <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-200">
+              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                <Target className="h-6 w-6 text-orange-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">eCommerce SMBs</h3>
+              <p className="text-gray-600 text-sm mb-4">Shopify stores, online retailers</p>
+              <div className="text-sm text-gray-500">
+                <strong>Example:</strong> Order shipped → thank you email → 7 days later ask for review → 30 days later upsell offer
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Pricing Section */}
+      <div id="pricing" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Affordable Virtual Admin
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Replaces a $25-30/hr admin assistant. All plans include a 14-day free trial.
             </p>
           </div>
           
@@ -273,13 +337,13 @@ export default function Home() {
       <div className="bg-blue-600 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to transform your workflow?
+            Ready to stop drowning in admin?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of teams already using FlowMate to boost their productivity.
+            Join 2,000+ small business owners who&apos;ve automated their admin tasks and gained back 10+ hours per week.
           </p>
           <a href="/auth/signup" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-medium hover:bg-gray-100 transition-colors">
-            Get Started Today
+            Start Your Free Trial
           </a>
         </div>
       </div>
@@ -294,7 +358,7 @@ export default function Home() {
                 <span className="ml-2 text-xl font-bold">FlowMate</span>
               </div>
               <p className="text-gray-400">
-                Streamline your workflow and boost productivity with our comprehensive platform.
+                The admin assistant for small business owners who don&apos;t have one. Automate admin tasks and focus on growing your business.
               </p>
             </div>
             

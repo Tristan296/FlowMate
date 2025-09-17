@@ -1,24 +1,41 @@
 # FlowMate
 
-FlowMate is a modern SaaS productivity platform designed to streamline workflows, enhance team collaboration, and boost productivity for teams and individuals.
+FlowMate is an admin workflow automation SaaS designed specifically for small business owners who don't have a dedicated admin team. Stop chasing clients, stop drowning in admin tasks - let FlowMate be your virtual assistant.
 
-![FlowMate Landing Page](https://github.com/user-attachments/assets/f71d8be5-b15e-4ea4-bbaa-20cb568a6a7a)
+![FlowMate Admin Automation SaaS](https://github.com/user-attachments/assets/ff34508b-fbfe-4750-9d78-50554b364659)
 
 ## 🚀 Features
 
-### Core Functionality
-- **Workflow Automation** - Automate repetitive tasks and streamline processes
-- **Team Collaboration** - Real-time collaboration and communication tools
-- **Analytics & Insights** - Comprehensive productivity analytics and reporting
-- **Smart Scheduling** - Intelligent scheduling that adapts to your workflow
-- **Document Management** - Organize, share, and collaborate on documents
-- **Lightning Fast** - Built with modern technology for instant responses
+### Admin Workflow Automation
+- **Client Follow-Up Automation** - Never lose a lead with automatic quote and proposal follow-ups
+- **Invoice Reminders** - Auto-send payment reminders at 7, 14, and 30 days overdue
+- **SMS & Email Templates** - Pre-built templates for appointments, confirmations, and thank you messages
+- **Appointment Automation** - Booking confirmations, SMS reminders, and follow-up surveys
+- **Review & Upsell Automation** - Automatic review requests and targeted upsell campaigns
+- **Set & Forget Setup** - Industry-specific templates with simple, non-tech setup
+
+### Target Industries
+- **Service Businesses** - Salons, gyms, spas, personal trainers
+- **Tradies & Contractors** - Plumbers, electricians, builders, landscapers  
+- **Professional Services** - Consultants, agencies, accountants, legal advisors
+- **eCommerce SMBs** - Shopify stores and small online retailers
 
 ### User Experience
 - **Modern UI/UX** - Clean, intuitive interface built with Tailwind CSS
 - **Responsive Design** - Works seamlessly across desktop, tablet, and mobile
-- **Dark/Light Mode** - Coming soon
-- **Real-time Updates** - Live collaboration and instant synchronization
+- **Industry Templates** - Pre-configured workflows for common business types
+- **Simple Setup** - No complex configuration like Zapier - built for non-tech users
+
+## 🎯 Who It's For
+
+FlowMate is designed for time-poor small business owners who:
+
+- Don't have a dedicated admin team
+- Spend 5-15 hours per week on repetitive admin tasks
+- Can't afford complex software or don't have patience to learn it
+- Need to automate emails, follow-ups, invoicing, and scheduling
+
+**Replaces a $25-30/hr admin assistant for just $29-99/month.**
 
 ## 🎯 MVP Features Implemented
 
