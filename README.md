@@ -52,6 +52,13 @@ FlowMate is designed for time-poor small business owners who:
 - **Password Security** - Real-time password strength validation
 - **Social Login** - Google and GitHub integration (UI ready)
 
+### 💳 Payment Integration
+- **Stripe Integration** - Secure subscription billing
+- **Plan Selection** - Interactive pricing page with plan comparison
+- **Free Trial** - 14-day trial period for all plans
+- **Subscription Management** - Automated billing and renewals
+- **Webhook Support** - Real-time payment event processing
+
 ### 📊 Dashboard
 - **Project Overview** - Active projects with progress tracking
 - **Team Management** - Team member statistics and management
@@ -70,6 +77,11 @@ FlowMate is designed for time-poor small business owners who:
 - **Lucide React** - Beautiful SVG icons
 - **React Hook Form** - Performant forms with easy validation
 
+### Payment Processing
+- **Stripe** - Secure subscription billing and payments
+- **Webhook Support** - Real-time payment event handling
+- **Subscription Management** - Automated recurring billing
+
 ### Development Tools
 - **ESLint** - Code linting and quality
 - **Prettier** - Code formatting (ready to configure)
@@ -85,6 +97,7 @@ FlowMate is designed for time-poor small business owners who:
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
+- Stripe account (for payment processing)
 
 ### Installation
 
@@ -99,12 +112,24 @@ FlowMate is designed for time-poor small business owners who:
    npm install
    ```
 
-3. **Start the development server**
+3. **Configure environment variables**
+   ```bash
+   cp .env.local.example .env.local
+   # Edit .env.local with your Stripe credentials
+   ```
+
+4. **Set up Stripe** (see [STRIPE_SETUP.md](./STRIPE_SETUP.md) for detailed instructions)
+   - Create Stripe account
+   - Set up products and pricing
+   - Configure webhooks
+   - Add API keys to .env.local
+
+5. **Start the development server**
    ```bash
    npm run dev
    ```
 
-4. **Open your browser**
+6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ### Available Scripts
@@ -166,12 +191,16 @@ FlowMate/
 - [x] Dashboard interface
 - [x] Responsive design
 - [x] Modern UI components
+- [x] **Stripe payments integration**
+- [x] **Subscription management**
+- [x] **Plan selection flow**
 
 ### Phase 2 - Backend Integration
 - [ ] User authentication system
 - [ ] Database integration
 - [ ] API development
 - [ ] Real-time functionality
+- [x] **Payment processing (Stripe)**
 
 ### Phase 3 - Advanced Features
 - [ ] Project management

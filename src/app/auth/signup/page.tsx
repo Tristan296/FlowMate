@@ -1,12 +1,18 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Workflow, Eye, EyeOff, ArrowLeft, Check } from 'lucide-react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { Workflow, Eye, EyeOff, ArrowLeft, Check, CreditCard } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { PRICING_PLANS, PlanKey } from '@/lib/stripe';
 
-export default function SignUp() {
+function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<PlanKey>('professional');
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const searchParams = useSearchParams();
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -17,12 +23,60 @@ export default function SignUp() {
     agreeToTerms: false
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Get plan from URL parameters
+  useEffect(() => {
+    const planFromUrl = searchParams.get('plan') as PlanKey;
+    if (planFromUrl && PRICING_PLANS[planFromUrl]) {
+      setSelectedPlan(planFromUrl);
+    }
+  }, [searchParams]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // This would normally handle user registration
-    console.log('Sign up attempt:', formData);
-    // For demo purposes, redirect to dashboard
-    window.location.href = '/dashboard';
+    
+    if (!formData.agreeToTerms) {
+      alert('Please agree to the terms and conditions');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    setIsCheckingOut(true);
+
+    try {
+      // Create Stripe checkout session
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planKey: selectedPlan,
+          email: formData.email,
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create checkout session');
+      }
+
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL received');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Failed to start checkout. Please try again.');
+      setIsCheckingOut(false);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,6 +197,60 @@ export default function SignUp() {
               </div>
             </div>
 
+            {/* Plan Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Choose your plan
+              </label>
+              <div className="space-y-3">
+                {Object.entries(PRICING_PLANS).map(([key, plan]) => (
+                  <label
+                    key={key}
+                    className={`relative flex cursor-pointer rounded-lg border p-4 focus:outline-none ${
+                      selectedPlan === key
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-300 bg-white hover:bg-gray-50'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="plan"
+                      value={key}
+                      checked={selectedPlan === key}
+                      onChange={(e) => setSelectedPlan(e.target.value as PlanKey)}
+                      className="sr-only"
+                    />
+                    <div className="flex flex-1 items-center justify-between">
+                      <div className="flex items-center">
+                        <div className="text-sm">
+                          <div className="font-medium text-gray-900 flex items-center">
+                            {plan.name}
+                            {plan.highlighted && (
+                              <span className="ml-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                                Popular
+                              </span>
+                            )}
+                          </div>
+                          <div className="text-gray-500">{plan.description}</div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-lg font-semibold text-gray-900">
+                          ${plan.price}/mo
+                        </div>
+                        <div className="text-xs text-green-600">14-day free trial</div>
+                      </div>
+                    </div>
+                    <div
+                      className={`absolute -inset-px rounded-lg border-2 pointer-events-none ${
+                        selectedPlan === key ? 'border-blue-500' : 'border-transparent'
+                      }`}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -243,11 +351,22 @@ export default function SignUp() {
                 disabled={
                   !formData.agreeToTerms || 
                   formData.password !== formData.confirmPassword ||
-                  !passwordRequirements.every(req => req.met)
+                  !passwordRequirements.every(req => req.met) ||
+                  isCheckingOut
                 }
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                Start free trial
+                {isCheckingOut ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="h-4 w-4 mr-2" />
+                    Start free trial
+                  </>
+                )}
               </button>
             </div>
           </form>
@@ -290,5 +409,13 @@ export default function SignUp() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignUp() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignUpForm />
+    </Suspense>
   );
 }

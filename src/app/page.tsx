@@ -119,7 +119,7 @@ export default function Home() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <a href="#features" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Features</a>
-                <a href="#pricing" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Pricing</a>
+                <a href="/pricing" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Pricing</a>
                 <a href="#about" className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">About</a>
                 <a href="/auth/signin" className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
                   Sign In
@@ -143,7 +143,7 @@ export default function Home() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
               <a href="#features" className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Features</a>
-              <a href="#pricing" className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+              <a href="/pricing" className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
               <a href="#about" className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium">About</a>
               <a href="/auth/signin" className="w-full text-left bg-blue-600 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700 transition-colors">
                 Sign In
@@ -318,7 +318,7 @@ export default function Home() {
                   ))}
                 </ul>
                 
-                <a href="/auth/signup" 
+                <a href={`/auth/signup?plan=${index === 0 ? 'starter' : index === 1 ? 'professional' : 'business'}`} 
                   className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
                     plan.highlighted
                       ? 'bg-blue-600 text-white hover:bg-blue-700'
@@ -342,7 +342,7 @@ export default function Home() {
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
             Join 2,000+ small business owners who&apos;ve automated their admin tasks and gained back 10+ hours per week.
           </p>
-          <a href="/auth/signup" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-medium hover:bg-gray-100 transition-colors">
+          <a href="/pricing" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-medium hover:bg-gray-100 transition-colors">
             Start Your Free Trial
           </a>
         </div>
